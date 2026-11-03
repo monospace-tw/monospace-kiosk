@@ -60,19 +60,19 @@ h1 .type{height:1.5em;white-space:pre}
 /* Roll clockwise from the left edge, settle, then reveal the wordmark. */
 @keyframes ninja-roll {
   0% { transform:translate(-3.7em,0) rotate(-360deg);animation-timing-function:linear }
-  2% { transform:translate(-1.2em,0) rotate(-118deg);animation-timing-function:ease-out }
-  3.45% { transform:translate(.08em,-.14em) rotate(8deg);animation-timing-function:ease-in }
-  4.15% { transform:translate(.03em,0) rotate(3deg) }
-  4.65%,100% { transform:translate(0,0) rotate(0deg) }
+  30% { transform:translate(-1.2em,0) rotate(-118deg);animation-timing-function:ease-out }
+  51.75% { transform:translate(.08em,-.14em) rotate(8deg);animation-timing-function:ease-in }
+  62.25% { transform:translate(.03em,0) rotate(3deg) }
+  69.75%,100% { transform:translate(0,0) rotate(0deg) }
 }
 @keyframes word {
-  0%,4.15% { transform:translateX(-.32em);clip-path:inset(0 100% 0 0) }
-  6%,100% { transform:none;clip-path:inset(0) }
+  0%,62.25% { transform:translateX(-.32em);clip-path:inset(0 100% 0 0) }
+  90%,100% { transform:none;clip-path:inset(0) }
 }
 @keyframes stamp {
-  0%,5.6% { transform:scale(0) }
-  6.4% { transform:scale(1.2) }
-  6.7%,100% { transform:none }
+  0%,84% { transform:scale(0) }
+  96% { transform:scale(1.2) }
+  100% { transform:none }
 }
 @keyframes drift {
   0%,100% { transform:none }
@@ -81,12 +81,12 @@ h1 .type{height:1.5em;white-space:pre}
 }
 @keyframes swing{from{transform:rotate(-13deg) translateY(-2px)}to{transform:rotate(12deg) translateY(2px)}}
 @media(prefers-reduced-motion:no-preference){
-.brand .mark,.brand-word,.brand sup {
-  animation-duration:30s;animation-iteration-count:infinite;
+.brand.minute-entry .mark,.brand.minute-entry .brand-word,.brand.minute-entry sup {
+  animation-duration:2s;
   animation-timing-function:cubic-bezier(.2,.8,.2,1)
 }
-.brand .mark{animation-name:ninja-roll}
-.brand-word{animation-name:word}.brand sup{animation-name:stamp}
+.minute-entry .mark{animation-name:ninja-roll}
+.minute-entry .brand-word{animation-name:word}.minute-entry sup{animation-name:stamp}
 .drift.moving{animation:drift 7s ease-in-out}
 .type.typing::after{content:"";display:inline-block;width:.055em;height:.82em;margin-left:.09em;background:#284aab}
 .reel{animation:roll 30s var(--lag) cubic-bezier(.18,.68,.25,1) infinite both}
@@ -113,6 +113,7 @@ h1 .type{height:1.5em;white-space:pre}
 <script>
 (function(){
   var clock=document.getElementById('local-clock');
+  var brand=document.querySelector('.brand');
   var weekdays='SUN MON TUE WED THU FRI SAT'.split(' ');
   var months='JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC'.split(' ');
   function pad(value){return ('0'+value).slice(-2);}
@@ -123,7 +124,10 @@ h1 .type{height:1.5em;white-space:pre}
     clock.textContent=weekdays[local.getUTCDay()]+', '+pad(local.getUTCDate())+' '+
       months[local.getUTCMonth()]+' '+local.getUTCFullYear()+'  '+pad(local.getUTCHours())+':'+
       pad(local.getUTCMinutes())+':'+pad(local.getUTCSeconds());
-    setTimeout(showTime,1000-now.getMilliseconds());
+    var seconds=local.getUTCSeconds();
+    if(seconds===0) brand.classList.add('minute-entry');
+    if(seconds>=3) brand.classList.remove('minute-entry');
+    setTimeout(showTime,1000-Date.now()%1000);
   }
   showTime();
   var type=document.querySelector('.type'), phrase=type.textContent, count=document.querySelector('.count'), total=count.textContent, timer;
