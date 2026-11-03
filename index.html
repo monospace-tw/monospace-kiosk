@@ -50,7 +50,15 @@ h1 .type{height:1.5em;white-space:pre}
 .rsvp{margin-top:.2em;display:flex;align-items:center;gap:.62em;font:bold 1.06vw/1 "DejaVu Sans Mono",monospace;color:#284aab;letter-spacing:.055em}
 .count{font: bold 1.55vw/1 "DejaVu Sans Mono",monospace;letter-spacing:0;color:#141515;display:inline-flex}
 .digit{height:1em;overflow:hidden}.reel,.reel b{display:block}.reel b{height:1em}
-@keyframes roll{from{transform:translateY(var(--start))}84%{transform:translateY(-.09em)}to{transform:translateY(0)}}
+/* Roll once at the beginning of each 30-second cycle. */
+@keyframes roll {
+  0% { transform:translateY(var(--start)) }
+  4% { transform:translateY(-.09em) }
+  5%,100% { transform:none }
+}
+.clock { display:grid;text-align:right;gap:.2em;font:bold 1.6vw/1.1 "DejaVu Sans Mono",monospace }
+.clock small { font-size:.83vw;letter-spacing:.13em;color:#365271 }
+.schedule { font:bold 1.14vw/1.25 "DejaVu Sans Mono",monospace;color:#18273a;white-space:nowrap }
 /* Each logo part settles during the opening 1.3s of a shared 30s loop. */
 @keyframes cap {
   0% { transform:translate(-35%,-80%) rotate(-12deg) }
@@ -84,14 +92,14 @@ h1 .type{height:1.5em;white-space:pre}
 .brand-word{animation-name:word}.brand sup{animation-name:stamp}
 .drift.moving{animation:drift 7s ease-in-out}
 .type.typing::after{content:"";display:inline-block;width:.055em;height:.82em;margin-left:.09em;background:#284aab}
-.reel{animation:roll 1.45s var(--lag) cubic-bezier(.18,.68,.25,1) both}
+.reel{animation:roll 30s var(--lag) cubic-bezier(.18,.68,.25,1) infinite both}
 .glyph{animation:swing 1.3s ease-in-out infinite alternate}.heart{animation-delay:-.8s;animation-duration:1.65s}.query{animation-delay:-.4s;animation-duration:1.48s}
 }
 </style>
-<main><section class="poster"><header><b class="brand" aria-label="monospace®"><span class="mark" aria-hidden="true"><i class="cap"></i><i class="base"></i></span><span class="brand-word">monospace<sup>®</sup></span></b><span class="date" lang="en"><time datetime="2026-11-07T10:00:00+08:00">SAT, 07 NOV 2026</time><i>10:00–17:00 UTC+8</i></span></header>
+<main><section class="poster"><header><b class="brand" aria-label="monospace®"><span class="mark" aria-hidden="true"><i class="cap"></i><i class="base"></i></span><span class="brand-word">monospace<sup>®</sup></span></b><span class="clock" lang="en"><small>TAICHUNG · UTC+8</small><time id="local-clock">—</time></span></header>
 <section class="hero"><div class="copy"><h1 lang="en"><span class="type" aria-label="DevDay Exchange / Taichung">DevDay Exchange / Taichung</span><em class="drift">Community<br>Hack Day.</em></h1>
 <a class="ticket" href="https://luma.com/8al1pfmi"><svg aria-hidden="true" viewBox="0 0 33 33" xmlns="http://www.w3.org/2000/svg" width="33" height="33"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M4 4.5h7m1 0h2m1 0h2m3 0h1m1 0h7m-25 1h1m5 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1m5 0h1m-25 1h1m1 0h3m1 0h1m1 0h1m2 0h3m4 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m2 0h1m3 0h1m1 0h2m1 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h1m3 0h1m1 0h3m1 0h1m-25 1h1m5 0h1m4 0h2m5 0h1m5 0h1m-25 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-15 1h4m2 0h1m-17 1h1m2 0h6m5 0h1m1 0h2m2 0h1m1 0h3m-20 1h1m2 0h1m2 0h5m1 0h1m1 0h5m-22 1h1m1 0h1m1 0h1m1 0h1m6 0h2m1 0h1m1 0h2m2 0h1m-25 1h1m1 0h3m2 0h1m2 0h1m1 0h1m2 0h1m2 0h7m-21 1h3m3 0h1m1 0h1m1 0h1m1 0h1m1 0h2m4 0h1m-25 1h1m11 0h2m1 0h2m3 0h1m2 0h1m-24 1h3m1 0h4m1 0h2m1 0h2m1 0h1m1 0h1m2 0h5m-25 1h1m1 0h1m1 0h1m4 0h1m2 0h1m2 0h5m1 0h2m1 0h1m-25 1h1m2 0h4m2 0h5m1 0h6m1 0h2m-16 1h2m1 0h2m1 0h1m1 0h1m3 0h1m1 0h2m-24 1h7m1 0h1m2 0h1m1 0h2m1 0h1m1 0h1m1 0h1m3 0h1m-25 1h1m5 0h1m1 0h1m3 0h5m3 0h1m2 0h2m-25 1h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h7m-21 1h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h1m2 0h2m4 0h2m-25 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m2 0h2m2 0h5m-25 1h1m5 0h1m4 0h1m5 0h4m1 0h3m-25 1h7m1 0h3m1 0h1m2 0h2m1 0h1m2 0h1m2 0h1"/></svg>
-<span class="stack"><span class="eyebrow">EVENT REGISTRATION</span><strong>掃碼報名活動</strong><span class="rsvp" lang="en"><span class="count" data-luma-going>59</span> GOING</span></span></a></div>
+<span class="stack"><span class="eyebrow">EVENT REGISTRATION</span><strong>掃碼報名活動</strong><span class="schedule" lang="en"><time datetime="2026-11-07T10:00:00+08:00">SAT, 07 NOV 2026</time> · 10:00–17:00 UTC+8</span><span class="rsvp" lang="en"><span class="count" data-luma-going>59</span> GOING</span></span></a></div>
 <div class="art" role="img" aria-label="彩色表情圓臉"><div class="sheet nod"><svg viewBox="0 0 530 355" aria-hidden="true"><g fill="#131516" font-family="DejaVu Sans Mono,monospace" font-weight="bold"><g><circle cx="220" cy="65" r="51" fill="#f57400" /><path d="M185 90h22m27 0h22" stroke="#141515" stroke-width="6" />
 <circle cx="439" cy="303" r="34" fill="#066aff" /><path d="m416 285 9 4-9 5m44-9-9 4 9 5" fill="none" stroke="black" stroke-width="4" /></g>
 </g></svg></div><div class="sheet float"><svg viewBox="0 0 530 355" aria-hidden="true"><g fill="#131516" font-family="DejaVu Sans Mono,monospace" font-weight="bold"><g><circle cx="103" cy="134" r="68" fill="#066aff" /><path d="m58 121 24 10-24 10m90-20-24 10 24 10" fill="none" stroke="#101212" stroke-width="7" />
@@ -103,10 +111,24 @@ h1 .type{height:1.5em;white-space:pre}
 <g transform="translate(31 52)"><g class="glyph bang"><text x="-10" y="6" font-size="17" fill="#00763a">!!!</text></g></g><g transform="translate(355 286)"><g class="glyph heart"><text x="-10" y="6" font-size="26" fill="#034bad">&lt;3</text></g></g><g transform="translate(485 217)"><g class="glyph query"><text x="-10" y="6" font-size="37" fill="#034bad">?</text></g></g></g></svg></div></div></section>
 </section><footer class="entry">
 <div class="stack"><span class="eyebrow">MEMBER ACCESS</span><strong>會員請刷卡</strong></div>
-<a class="visitor" href="https://lin.ee/uA8Jr5Y"><span class="stack"><span class="eyebrow">VISITORS / LINE</span><strong>訪客預約・諮詢</strong><span class="id">@monospace.tw</span></span><svg aria-hidden="true" viewBox="0 0 33 33" xmlns="http://www.w3.org/2000/svg" width="33" height="33"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M4 4.5h7m1 0h2m2 0h1m3 0h1m1 0h7m-25 1h1m5 0h1m1 0h2m1 0h1m1 0h2m1 0h1m1 0h1m5 0h1m-25 1h1m1 0h3m1 0h1m1 0h4m1 0h1m1 0h2m1 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m2 0h1m2 0h1m3 0h1m1 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h4m1 0h1m1 0h3m1 0h1m-25 1h1m5 0h1m3 0h4m4 0h1m5 0h1m-25 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-16 1h6m1 0h1m-17 1h1m2 0h8m1 0h1m1 0h2m1 0h1m2 0h1m1 0h3m-23 1h1m1 0h1m2 0h3m1 0h2m2 0h1m3 0h5m-23 1h2m1 0h8m1 0h5m2 0h2m2 0h1m-25 1h3m4 0h1m1 0h2m4 0h1m2 0h7m-24 1h3m2 0h2m4 0h1m1 0h1m1 0h1m1 0h2m4 0h1m-25 1h1m1 0h1m4 0h1m1 0h1m3 0h1m1 0h1m4 0h1m2 0h1m-24 1h3m2 0h3m1 0h7m1 0h1m2 0h5m-25 1h1m1 0h4m1 0h3m1 0h1m7 0h1m1 0h2m1 0h1m-25 1h1m1 0h5m2 0h1m5 0h6m1 0h2m-16 1h1m2 0h4m1 0h1m3 0h1m1 0h2m-24 1h7m1 0h4m1 0h2m1 0h1m1 0h1m1 0h1m3 0h1m-25 1h1m5 0h1m1 0h2m2 0h2m1 0h2m3 0h1m-21 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m1 0h6m2 0h2m-25 1h1m1 0h3m1 0h1m1 0h3m3 0h3m1 0h1m4 0h2m-25 1h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h1m2 0h1m2 0h5m-25 1h1m5 0h1m12 0h2m1 0h3m-25 1h7m1 0h3m1 0h3m1 0h2m3 0h1m2 0h1"/></svg>
+<a class="visitor" href="https://lin.ee/uA8Jr5Y"><span class="stack"><span class="eyebrow">VISITORS / LINE</span><strong>訪客預約・諮詢</strong><span class="id">LINE ID @monospace.tw</span></span><svg aria-hidden="true" viewBox="0 0 33 33" xmlns="http://www.w3.org/2000/svg" width="33" height="33"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M4 4.5h7m1 0h2m2 0h1m3 0h1m1 0h7m-25 1h1m5 0h1m1 0h2m1 0h1m1 0h2m1 0h1m1 0h1m5 0h1m-25 1h1m1 0h3m1 0h1m1 0h4m1 0h1m1 0h2m1 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m2 0h1m2 0h1m3 0h1m1 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h4m1 0h1m1 0h3m1 0h1m-25 1h1m5 0h1m3 0h4m4 0h1m5 0h1m-25 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-16 1h6m1 0h1m-17 1h1m2 0h8m1 0h1m1 0h2m1 0h1m2 0h1m1 0h3m-23 1h1m1 0h1m2 0h3m1 0h2m2 0h1m3 0h5m-23 1h2m1 0h8m1 0h5m2 0h2m2 0h1m-25 1h3m4 0h1m1 0h2m4 0h1m2 0h7m-24 1h3m2 0h2m4 0h1m1 0h1m1 0h1m1 0h2m4 0h1m-25 1h1m1 0h1m4 0h1m1 0h1m3 0h1m1 0h1m4 0h1m2 0h1m-24 1h3m2 0h3m1 0h7m1 0h1m2 0h5m-25 1h1m1 0h4m1 0h3m1 0h1m7 0h1m1 0h2m1 0h1m-25 1h1m1 0h5m2 0h1m5 0h6m1 0h2m-16 1h1m2 0h4m1 0h1m3 0h1m1 0h2m-24 1h7m1 0h4m1 0h2m1 0h1m1 0h1m1 0h1m3 0h1m-25 1h1m5 0h1m1 0h2m2 0h2m1 0h2m3 0h1m-21 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m1 0h6m2 0h2m-25 1h1m1 0h3m1 0h1m1 0h3m3 0h3m1 0h1m4 0h2m-25 1h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h1m2 0h1m2 0h5m-25 1h1m5 0h1m12 0h2m1 0h3m-25 1h7m1 0h3m1 0h3m1 0h2m3 0h1m2 0h1"/></svg>
 </a></footer></main>
 <script>
 (function(){
+  var clock=document.getElementById('local-clock');
+  var weekdays='SUN MON TUE WED THU FRI SAT'.split(' ');
+  var months='JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC'.split(' ');
+  function pad(value){return ('0'+value).slice(-2);}
+  function showTime(){
+    var now=new Date();
+    var local=new Date(now.getTime()+8*3600000);
+    clock.dateTime=now.toISOString();
+    clock.textContent=weekdays[local.getUTCDay()]+', '+pad(local.getUTCDate())+' '+
+      months[local.getUTCMonth()]+' '+local.getUTCFullYear()+'  '+pad(local.getUTCHours())+':'+
+      pad(local.getUTCMinutes())+':'+pad(local.getUTCSeconds());
+    setTimeout(showTime,1000-now.getMilliseconds());
+  }
+  showTime();
   var type=document.querySelector('.type'), phrase=type.textContent, count=document.querySelector('.count'), total=count.textContent, timer;
   var motion=matchMedia('(prefers-reduced-motion: no-preference)');
   var headline=document.querySelector('.drift');
