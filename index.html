@@ -24,13 +24,6 @@ h1 span{display:block;font-size:.405em;letter-spacing:-.05em;line-height:1.5;mar
 @keyframes sway{from{transform:translate(-1.1vw,.55vw) rotate(-3deg)}to{transform:translate(1.1vw,-.75vw) rotate(3deg)}}
 @keyframes nod{from{transform:translate(-.65vw,-.55vw) rotate(-3deg)}to{transform:translate(.8vw,1vw) rotate(2deg)}}
 @keyframes hop{0%,65%,100%{transform:translateY(.45vw) scale(1);animation-timing-function:ease-out}24%{transform:translateY(-1.8vw) scale(1.025);animation-timing-function:ease-in}49%{transform:translateY(.45vw) scale(1.035,.97);animation-timing-function:ease-out}}
-@keyframes title-enter {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .hero h1 { animation: title-enter 500ms cubic-bezier(.22, .61, .36, 1); }
-}
 @media(prefers-reduced-motion:reduce){.art .sheet{animation:none;will-change:auto}}
 
 h1{font-size:6.65vw}h1 span{font-size:.35em;margin-bottom:.35em}.date{font-weight:bold;letter-spacing:.025em}.date i{font-style:normal;border-left:2px solid #949793;padding-left:1.05em;margin-left:1.05em}
@@ -44,11 +37,38 @@ a{color:inherit;text-decoration:none}
 .entry .eyebrow{color:#c5d6df}.entry strong{font-size:3vw;line-height:1.3}
 .visitor{border-left:1px solid #8b9aa3;padding-left:3.7vw;justify-content:space-between}.visitor svg{width:9vw;height:9vw}
 .id{font: bold 1.65vw "DejaVu Sans Mono",monospace;color:#9aebb7}
+
+@font-face{font-family:BrandDM;font-weight:700;src:url(data:font/ttf;base64,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) format("truetype")}
+header{align-items:center}
+.brand{display:inline-flex;align-items:center;gap:.38em;font:700 2.15vw/1 BrandDM,sans-serif;letter-spacing:-.048em}
+.mark{position:relative;width:1.36em;height:.84em;display:block}
+.mark i{position:absolute;left:0;width:100%;height:50%;background-image:url(data:image/png;base64,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);background-size:100% 200%;background-repeat:no-repeat}
+.mark .cap{top:0;background-position:top}.mark .base{bottom:0;background-position:bottom}
+.brand-word{position:relative}.brand sup{display:inline-block;font:400 .38em/1 sans-serif;vertical-align:top;margin:.08em 0 0 .18em;letter-spacing:0}
+h1 .type{height:1.5em;white-space:pre}
+.drift{display:block;font-style:normal}
+.rsvp{margin-top:.2em;display:flex;align-items:center;gap:.62em;font:bold 1.06vw/1 "DejaVu Sans Mono",monospace;color:#284aab;letter-spacing:.055em}
+.count{font: bold 1.55vw/1 "DejaVu Sans Mono",monospace;letter-spacing:0;color:#141515;display:inline-flex}
+.digit{height:1em;overflow:hidden}.reel,.reel b{display:block}.reel b{height:1em}
+@keyframes roll{from{transform:translateY(var(--start))}84%{transform:translateY(-.09em)}to{transform:translateY(0)}}
+@keyframes cap{from{transform:translate(-35%,-80%) rotate(-12deg)}to{transform:none}}
+@keyframes base{from{transform:translate(35%,80%) rotate(12deg)}to{transform:none}}
+@keyframes word{from{transform:translateX(-.32em);clip-path:inset(0 100% 0 0)}to{transform:none;clip-path:inset(0)}}
+@keyframes stamp{from{transform:scale(0)}80%{transform:scale(1.2)}to{transform:none}}
+@keyframes drift{0%{transform:translateX(5%);animation-timing-function:ease-out}12%{transform:translateX(1%)}64%{transform:translateX(-.8%)}84%{transform:translateX(-1%)}100%{transform:translateX(5%)}}
+@keyframes swing{from{transform:rotate(-13deg) translateY(-2px)}to{transform:rotate(12deg) translateY(2px)}}
+@media(prefers-reduced-motion:no-preference){
+.cap{animation:cap .58s cubic-bezier(.2,.8,.2,1) both}.base{animation:base .56s .14s cubic-bezier(.2,.8,.2,1) both}
+.brand-word{animation:word .55s .48s both}.brand sup{animation:stamp .32s .94s both}
+.drift{animation:drift 16s linear infinite}.type.typing::after{content:"";display:inline-block;width:.055em;height:.82em;margin-left:.09em;background:#284aab}
+.reel{animation:roll 1.45s var(--lag) cubic-bezier(.18,.68,.25,1) both}
+.glyph{animation:swing 1.3s ease-in-out infinite alternate}.heart{animation-delay:-.8s;animation-duration:1.65s}.query{animation-delay:-.4s;animation-duration:1.48s}
+}
 </style>
-<main><section class="poster"><header><b class="brand">Monospace</b><span class="date" lang="en"><time datetime="2026-11-07T10:00:00+08:00">SAT, 07 NOV 2026</time><i>10:00–17:00 UTC+8</i></span></header>
-<section class="hero"><div class="copy"><h1 lang="en"><span>DevDay Exchange / Taichung</span>Community<br>Hack Day.</h1>
+<main><section class="poster"><header><b class="brand" aria-label="monospace®"><span class="mark" aria-hidden="true"><i class="cap"></i><i class="base"></i></span><span class="brand-word">monospace<sup>®</sup></span></b><span class="date" lang="en"><time datetime="2026-11-07T10:00:00+08:00">SAT, 07 NOV 2026</time><i>10:00–17:00 UTC+8</i></span></header>
+<section class="hero"><div class="copy"><h1 lang="en"><span class="type" aria-label="DevDay Exchange / Taichung">DevDay Exchange / Taichung</span><em class="drift">Community<br>Hack Day.</em></h1>
 <a class="ticket" href="https://luma.com/8al1pfmi"><svg aria-hidden="true" viewBox="0 0 33 33" xmlns="http://www.w3.org/2000/svg" width="33" height="33"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M4 4.5h7m1 0h2m1 0h2m3 0h1m1 0h7m-25 1h1m5 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1m5 0h1m-25 1h1m1 0h3m1 0h1m1 0h1m2 0h3m4 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m2 0h1m3 0h1m1 0h2m1 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h1m3 0h1m1 0h3m1 0h1m-25 1h1m5 0h1m4 0h2m5 0h1m5 0h1m-25 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-15 1h4m2 0h1m-17 1h1m2 0h6m5 0h1m1 0h2m2 0h1m1 0h3m-20 1h1m2 0h1m2 0h5m1 0h1m1 0h5m-22 1h1m1 0h1m1 0h1m1 0h1m6 0h2m1 0h1m1 0h2m2 0h1m-25 1h1m1 0h3m2 0h1m2 0h1m1 0h1m2 0h1m2 0h7m-21 1h3m3 0h1m1 0h1m1 0h1m1 0h1m1 0h2m4 0h1m-25 1h1m11 0h2m1 0h2m3 0h1m2 0h1m-24 1h3m1 0h4m1 0h2m1 0h2m1 0h1m1 0h1m2 0h5m-25 1h1m1 0h1m1 0h1m4 0h1m2 0h1m2 0h5m1 0h2m1 0h1m-25 1h1m2 0h4m2 0h5m1 0h6m1 0h2m-16 1h2m1 0h2m1 0h1m1 0h1m3 0h1m1 0h2m-24 1h7m1 0h1m2 0h1m1 0h2m1 0h1m1 0h1m1 0h1m3 0h1m-25 1h1m5 0h1m1 0h1m3 0h5m3 0h1m2 0h2m-25 1h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h7m-21 1h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h1m2 0h2m4 0h2m-25 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m2 0h2m2 0h5m-25 1h1m5 0h1m4 0h1m5 0h4m1 0h3m-25 1h7m1 0h3m1 0h1m2 0h2m1 0h1m2 0h1m2 0h1"/></svg>
-<span class="stack"><span class="eyebrow">EVENT REGISTRATION</span><strong>掃碼報名活動</strong></span></a></div>
+<span class="stack"><span class="eyebrow">EVENT REGISTRATION</span><strong>掃碼報名活動</strong><span class="rsvp" lang="en"><span class="count">100</span> REGISTERED</span></span></a></div>
 <div class="art" role="img" aria-label="彩色表情圓臉"><div class="sheet nod"><svg viewBox="0 0 530 355" aria-hidden="true"><g fill="#131516" font-family="DejaVu Sans Mono,monospace" font-weight="bold"><g><circle cx="220" cy="65" r="51" fill="#f57400" /><path d="M185 90h22m27 0h22" stroke="#141515" stroke-width="6" />
 <circle cx="439" cy="303" r="34" fill="#066aff" /><path d="m416 285 9 4-9 5m44-9-9 4 9 5" fill="none" stroke="black" stroke-width="4" /></g>
 </g></svg></div><div class="sheet float"><svg viewBox="0 0 530 355" aria-hidden="true"><g fill="#131516" font-family="DejaVu Sans Mono,monospace" font-weight="bold"><g><circle cx="103" cy="134" r="68" fill="#066aff" /><path d="m58 121 24 10-24 10m90-20-24 10 24 10" fill="none" stroke="#101212" stroke-width="7" />
@@ -57,11 +77,39 @@ a{color:inherit;text-decoration:none}
 <circle cx="90" cy="280" r="38" fill="#00b253" /><text x="61" y="280" font-size="32" transform="rotate(10 90 280)">++</text></g>
 </g></svg></div><div class="sheet "><svg viewBox="0 0 530 355" aria-hidden="true"><g fill="#131516" font-family="DejaVu Sans Mono,monospace" font-weight="bold"><circle cx="467" cy="44" r="27" fill="#dadbd7" /><text x="450" y="53" font-size="22">**</text>
 <circle cx="146" cy="331" r="20" /><text x="132" y="337" font-size="16" fill="white">^^</text>
-<text x="21" y="58" font-size="17" fill="#00763a">!!!</text><text x="345" y="292" font-size="26" fill="#034bad">&lt;3</text><text x="475" y="223" font-size="37" fill="#034bad">?</text></g></svg></div></div></section>
+<g transform="translate(31 52)"><g class="glyph bang"><text x="-10" y="6" font-size="17" fill="#00763a">!!!</text></g></g><g transform="translate(355 286)"><g class="glyph heart"><text x="-10" y="6" font-size="26" fill="#034bad">&lt;3</text></g></g><g transform="translate(485 217)"><g class="glyph query"><text x="-10" y="6" font-size="37" fill="#034bad">?</text></g></g></g></svg></div></div></section>
 </section><footer class="entry">
 <div class="stack"><span class="eyebrow">MEMBER ACCESS</span><strong>會員請刷卡</strong></div>
 <a class="visitor" href="https://lin.ee/uA8Jr5Y"><span class="stack"><span class="eyebrow">VISITORS / LINE</span><strong>訪客預約・諮詢</strong><span class="id">@monospace.tw</span></span><svg aria-hidden="true" viewBox="0 0 33 33" xmlns="http://www.w3.org/2000/svg" width="33" height="33"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M4 4.5h7m1 0h2m2 0h1m3 0h1m1 0h7m-25 1h1m5 0h1m1 0h2m1 0h1m1 0h2m1 0h1m1 0h1m5 0h1m-25 1h1m1 0h3m1 0h1m1 0h4m1 0h1m1 0h2m1 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m2 0h1m2 0h1m3 0h1m1 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h4m1 0h1m1 0h3m1 0h1m-25 1h1m5 0h1m3 0h4m4 0h1m5 0h1m-25 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-16 1h6m1 0h1m-17 1h1m2 0h8m1 0h1m1 0h2m1 0h1m2 0h1m1 0h3m-23 1h1m1 0h1m2 0h3m1 0h2m2 0h1m3 0h5m-23 1h2m1 0h8m1 0h5m2 0h2m2 0h1m-25 1h3m4 0h1m1 0h2m4 0h1m2 0h7m-24 1h3m2 0h2m4 0h1m1 0h1m1 0h1m1 0h2m4 0h1m-25 1h1m1 0h1m4 0h1m1 0h1m3 0h1m1 0h1m4 0h1m2 0h1m-24 1h3m2 0h3m1 0h7m1 0h1m2 0h5m-25 1h1m1 0h4m1 0h3m1 0h1m7 0h1m1 0h2m1 0h1m-25 1h1m1 0h5m2 0h1m5 0h6m1 0h2m-16 1h1m2 0h4m1 0h1m3 0h1m1 0h2m-24 1h7m1 0h4m1 0h2m1 0h1m1 0h1m1 0h1m3 0h1m-25 1h1m5 0h1m1 0h2m2 0h2m1 0h2m3 0h1m-21 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m1 0h6m2 0h2m-25 1h1m1 0h3m1 0h1m1 0h3m3 0h3m1 0h1m4 0h2m-25 1h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h1m2 0h1m2 0h5m-25 1h1m5 0h1m12 0h2m1 0h3m-25 1h7m1 0h3m1 0h3m1 0h2m3 0h1m2 0h1"/></svg>
-</a></footer></main><!-- This Font Software is licensed under the SIL Open Font License,
+</a></footer></main>
+<script>
+(function(){
+  var type=document.querySelector('.type'), phrase=type.textContent, count=document.querySelector('.count'), total=count.textContent, timer;
+  var motion=matchMedia('(prefers-reduced-motion: no-preference)');
+  function run(){
+    clearTimeout(timer); type.textContent=phrase; type.className='type'; count.textContent=total;
+    if(!motion.matches)return;
+    count.setAttribute('aria-label',total);
+    count.textContent='';
+    total.split('').forEach(function(n,i){
+      var digit=document.createElement('span'), reel=document.createElement('span'), steps=3+i*3;
+      digit.className='digit'; digit.setAttribute('aria-hidden','true'); reel.className='reel';
+      for(var j=0;j<=steps;j++){var b=document.createElement('b');b.textContent=(Number(n)-steps+j+10*total.length)%10;reel.appendChild(b);}
+      reel.style.marginTop=-steps+'em';reel.style.setProperty('--start',steps+'em');reel.style.setProperty('--lag',(.16+i*.09)+'s');
+      digit.appendChild(reel);count.appendChild(digit);
+    });
+    var i=0,dir=1;
+    function tick(){
+      type.textContent=phrase.slice(0,i); type.className='type typing';
+      if(i===phrase.length && dir===1){dir=-1;type.className='type';timer=setTimeout(tick,22000);return;}
+      if(i===0)dir=1;
+      i+=dir;timer=setTimeout(tick,dir===1?92:34);
+    }
+    tick();
+  }
+  run();motion.addListener(run);
+})();
+</script><!-- This Font Software is licensed under the SIL Open Font License,
 Version 1.1.
 
 This license is copied below, and is also available with a FAQ at:
@@ -154,4 +202,100 @@ DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
 OTHER DEALINGS IN THE FONT SOFTWARE.
  -->
+<!-- DM Sans wordmark font
+Copyright 2014 The DM Sans Project Authors (https://github.com/googlefonts/dm-fonts)
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+https://scripts.sil.org/OFL
+
+
+-----------------------------------------------------------
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+-----------------------------------------------------------
+
+PREAMBLE
+The goals of the Open Font License (OFL) are to stimulate worldwide
+development of collaborative font projects, to support the font creation
+efforts of academic and linguistic communities, and to provide a free and
+open framework in which fonts may be shared and improved in partnership
+with others.
+
+The OFL allows the licensed fonts to be used, studied, modified and
+redistributed freely as long as they are not sold by themselves. The
+fonts, including any derivative works, can be bundled, embedded, 
+redistributed and/or sold with any software provided that any reserved
+names are not used by derivative works. The fonts and derivatives,
+however, cannot be released under any other type of license. The
+requirement for fonts to remain under this license does not apply
+to any document created using the fonts or their derivatives.
+
+DEFINITIONS
+"Font Software" refers to the set of files released by the Copyright
+Holder(s) under this license and clearly marked as such. This may
+include source files, build scripts and documentation.
+
+"Reserved Font Name" refers to any names specified as such after the
+copyright statement(s).
+
+"Original Version" refers to the collection of Font Software components as
+distributed by the Copyright Holder(s).
+
+"Modified Version" refers to any derivative made by adding to, deleting,
+or substituting -- in part or in whole -- any of the components of the
+Original Version, by changing formats or by porting the Font Software to a
+new environment.
+
+"Author" refers to any designer, engineer, programmer, technical
+writer or other person who contributed to the Font Software.
+
+PERMISSION & CONDITIONS
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of the Font Software, to use, study, copy, merge, embed, modify,
+redistribute, and sell modified and unmodified copies of the Font
+Software, subject to the following conditions:
+
+1) Neither the Font Software nor any of its individual components,
+in Original or Modified Versions, may be sold by itself.
+
+2) Original or Modified Versions of the Font Software may be bundled,
+redistributed and/or sold with any software, provided that each copy
+contains the above copyright notice and this license. These can be
+included either as stand-alone text files, human-readable headers or
+in the appropriate machine-readable metadata fields within text or
+binary files as long as those fields can be easily viewed by the user.
+
+3) No Modified Version of the Font Software may use the Reserved Font
+Name(s) unless explicit written permission is granted by the corresponding
+Copyright Holder. This restriction only applies to the primary font name as
+presented to the users.
+
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
+Software shall not be used to promote, endorse or advertise any
+Modified Version, except to acknowledge the contribution(s) of the
+Copyright Holder(s) and the Author(s) or with their explicit written
+permission.
+
+5) The Font Software, modified or unmodified, in part or in whole,
+must be distributed entirely under this license, and must not be
+distributed under any other license. The requirement for fonts to
+remain under this license does not apply to any document created
+using the Font Software.
+
+TERMINATION
+This license becomes null and void if any of the above conditions are
+not met.
+
+DISCLAIMER
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
+OTHER DEALINGS IN THE FONT SOFTWARE.
+
+-->
 </html>
