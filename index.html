@@ -51,16 +51,39 @@ h1 .type{height:1.5em;white-space:pre}
 .count{font: bold 1.55vw/1 "DejaVu Sans Mono",monospace;letter-spacing:0;color:#141515;display:inline-flex}
 .digit{height:1em;overflow:hidden}.reel,.reel b{display:block}.reel b{height:1em}
 @keyframes roll{from{transform:translateY(var(--start))}84%{transform:translateY(-.09em)}to{transform:translateY(0)}}
-@keyframes cap{from{transform:translate(-35%,-80%) rotate(-12deg)}to{transform:none}}
-@keyframes base{from{transform:translate(35%,80%) rotate(12deg)}to{transform:none}}
-@keyframes word{from{transform:translateX(-.32em);clip-path:inset(0 100% 0 0)}to{transform:none;clip-path:inset(0)}}
-@keyframes stamp{from{transform:scale(0)}80%{transform:scale(1.2)}to{transform:none}}
-@keyframes drift{0%{transform:translateX(5%);animation-timing-function:ease-out}12%{transform:translateX(1%)}64%{transform:translateX(-.8%)}84%{transform:translateX(-1%)}100%{transform:translateX(5%)}}
+/* Each logo part settles during the opening 1.3s of a shared 30s loop. */
+@keyframes cap {
+  0% { transform:translate(-35%,-80%) rotate(-12deg) }
+  2%,100% { transform:none }
+}
+@keyframes base {
+  0%,.47% { transform:translate(35%,80%) rotate(12deg) }
+  2.34%,100% { transform:none }
+}
+@keyframes word {
+  0%,1.6% { transform:translateX(-.32em);clip-path:inset(0 100% 0 0) }
+  3.44%,100% { transform:none;clip-path:inset(0) }
+}
+@keyframes stamp {
+  0%,3.14% { transform:scale(0) }
+  4% { transform:scale(1.2) }
+  4.24%,100% { transform:none }
+}
+@keyframes drift {
+  0%,100% { transform:none }
+  32% { transform:translateX(3%) }
+  78% { transform:translateX(-1.2%) }
+}
 @keyframes swing{from{transform:rotate(-13deg) translateY(-2px)}to{transform:rotate(12deg) translateY(2px)}}
 @media(prefers-reduced-motion:no-preference){
-.cap{animation:cap .58s cubic-bezier(.2,.8,.2,1) both}.base{animation:base .56s .14s cubic-bezier(.2,.8,.2,1) both}
-.brand-word{animation:word .55s .48s both}.brand sup{animation:stamp .32s .94s both}
-.drift{animation:drift 16s linear infinite}.type.typing::after{content:"";display:inline-block;width:.055em;height:.82em;margin-left:.09em;background:#284aab}
+.brand .cap,.brand .base,.brand-word,.brand sup {
+  animation-duration:30s;animation-iteration-count:infinite;
+  animation-timing-function:cubic-bezier(.2,.8,.2,1)
+}
+.brand .cap{animation-name:cap}.brand .base{animation-name:base}
+.brand-word{animation-name:word}.brand sup{animation-name:stamp}
+.drift.moving{animation:drift 7s ease-in-out}
+.type.typing::after{content:"";display:inline-block;width:.055em;height:.82em;margin-left:.09em;background:#284aab}
 .reel{animation:roll 1.45s var(--lag) cubic-bezier(.18,.68,.25,1) both}
 .glyph{animation:swing 1.3s ease-in-out infinite alternate}.heart{animation-delay:-.8s;animation-duration:1.65s}.query{animation-delay:-.4s;animation-duration:1.48s}
 }
@@ -86,7 +109,31 @@ h1 .type{height:1.5em;white-space:pre}
 (function(){
   var type=document.querySelector('.type'), phrase=type.textContent, count=document.querySelector('.count'), total=count.textContent, timer;
   var motion=matchMedia('(prefers-reduced-motion: no-preference)');
+  var headline=document.querySelector('.drift');
+  var letters=0;
+  var deleting=false;
+  function typeNext(){
+    type.textContent=phrase.slice(0,letters);
+    if(letters===phrase.length && !deleting){
+      type.className='type';
+      headline.classList.add('moving');
+      return;
+    }
+    type.className='type typing';
+    if(letters===0) deleting=false;
+    letters+=deleting?-1:1;
+    timer=setTimeout(typeNext,deleting?34:92);
+  }
+  headline.addEventListener('animationend',function(event){
+    if(event.animationName!=='drift' || !motion.matches) return;
+    headline.classList.remove('moving');
+    deleting=true;
+    typeNext();
+  });
   function run(){
+    headline.classList.remove('moving');
+    letters=0;
+    deleting=false;
     clearTimeout(timer); type.textContent=phrase; type.className='type'; count.textContent=total;
     if(!motion.matches)return;
     count.setAttribute('aria-label',total);
@@ -98,14 +145,7 @@ h1 .type{height:1.5em;white-space:pre}
       reel.style.marginTop=-steps+'em';reel.style.setProperty('--start',steps+'em');reel.style.setProperty('--lag',(.16+i*.09)+'s');
       digit.appendChild(reel);count.appendChild(digit);
     });
-    var i=0,dir=1;
-    function tick(){
-      type.textContent=phrase.slice(0,i); type.className='type typing';
-      if(i===phrase.length && dir===1){dir=-1;type.className='type';timer=setTimeout(tick,22000);return;}
-      if(i===0)dir=1;
-      i+=dir;timer=setTimeout(tick,dir===1?92:34);
-    }
-    tick();
+    typeNext();
   }
   run();motion.addListener(run);
 })();
