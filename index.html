@@ -57,19 +57,22 @@ h1 .type{height:1.5em;white-space:pre}
 .clock { display:grid;text-align:right;gap:.2em;font:bold 1.6vw/1.1 "DejaVu Sans Mono",monospace }
 .clock small { font-size:.83vw;letter-spacing:.13em;color:#365271 }
 .schedule { font:bold 1.14vw/1.25 "DejaVu Sans Mono",monospace;color:#18273a;white-space:nowrap }
-/* Each logo part settles during the opening 1.3s of a shared 30s loop. */
-@keyframes ninja-enter {
-  0% { transform:translateX(-.24em) rotate(-8deg) scale(.82) }
-  2.4%,100% { transform:none }
+/* Roll clockwise from the left edge, settle, then reveal the wordmark. */
+@keyframes ninja-roll {
+  0% { transform:translate(-3.7em,0) rotate(-360deg);animation-timing-function:linear }
+  2% { transform:translate(-1.2em,0) rotate(-118deg);animation-timing-function:ease-out }
+  3.45% { transform:translate(.08em,-.14em) rotate(8deg);animation-timing-function:ease-in }
+  4.15% { transform:translate(.03em,0) rotate(3deg) }
+  4.65%,100% { transform:translate(0,0) rotate(0deg) }
 }
 @keyframes word {
-  0%,1.6% { transform:translateX(-.32em);clip-path:inset(0 100% 0 0) }
-  3.44%,100% { transform:none;clip-path:inset(0) }
+  0%,4.15% { transform:translateX(-.32em);clip-path:inset(0 100% 0 0) }
+  6%,100% { transform:none;clip-path:inset(0) }
 }
 @keyframes stamp {
-  0%,3.14% { transform:scale(0) }
-  4% { transform:scale(1.2) }
-  4.24%,100% { transform:none }
+  0%,5.6% { transform:scale(0) }
+  6.4% { transform:scale(1.2) }
+  6.7%,100% { transform:none }
 }
 @keyframes drift {
   0%,100% { transform:none }
@@ -82,7 +85,7 @@ h1 .type{height:1.5em;white-space:pre}
   animation-duration:30s;animation-iteration-count:infinite;
   animation-timing-function:cubic-bezier(.2,.8,.2,1)
 }
-.brand .mark{animation-name:ninja-enter}
+.brand .mark{animation-name:ninja-roll}
 .brand-word{animation-name:word}.brand sup{animation-name:stamp}
 .drift.moving{animation:drift 7s ease-in-out}
 .type.typing::after{content:"";display:inline-block;width:.055em;height:.82em;margin-left:.09em;background:#284aab}
