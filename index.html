@@ -24,6 +24,13 @@ h1 span{display:block;font-size:.405em;letter-spacing:-.05em;line-height:1.5;mar
 @keyframes sway{from{transform:translate(-1.1vw,.55vw) rotate(-3deg)}to{transform:translate(1.1vw,-.75vw) rotate(3deg)}}
 @keyframes nod{from{transform:translate(-.65vw,-.55vw) rotate(-3deg)}to{transform:translate(.8vw,1vw) rotate(2deg)}}
 @keyframes hop{0%,65%,100%{transform:translateY(.45vw) scale(1);animation-timing-function:ease-out}24%{transform:translateY(-1.8vw) scale(1.025);animation-timing-function:ease-in}49%{transform:translateY(.45vw) scale(1.035,.97);animation-timing-function:ease-out}}
+@keyframes title-enter {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero h1 { animation: title-enter 500ms cubic-bezier(.22, .61, .36, 1); }
+}
 @media(prefers-reduced-motion:reduce){.art .sheet{animation:none;will-change:auto}}
 
 h1{font-size:6.65vw}h1 span{font-size:.35em;margin-bottom:.35em}.date{font-weight:bold;letter-spacing:.025em}.date i{font-style:normal;border-left:2px solid #949793;padding-left:1.05em;margin-left:1.05em}
