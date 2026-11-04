@@ -41,6 +41,24 @@ def build():
     output.mkdir(exist_ok=True)
     (output / "index.html").write_text(page)
 
+    reception = page.replace(
+        '<div class="stack"><span class="eyebrow">MEMBER ACCESS</span><strong>會員請刷卡</strong></div>',
+        '<div class="stack reception-welcome"><span class="eyebrow">WELCOME TO MONOSPACE</span>'
+        '<strong>歡迎來到 Monospace</strong><span class="reception-note">初次來訪，請洽櫃檯</span></div>',
+    ).replace('VISITORS / LINE', 'CONNECT WITH US').replace('訪客預約・諮詢', '空間預約・會員諮詢')
+    if reception == page or 'reception-welcome' not in reception:
+        raise ValueError("Reception footer template changed")
+    reception = reception.replace('</style>', """
+.entry {grid-template-columns: 1.2fr 1fr}
+.entry .visitor {gap:1.6vw;padding-left:2.5vw}
+.entry .visitor strong {font-size:2.25vw;white-space:nowrap}
+.reception-welcome strong {font-size:2.8vw}
+.reception-note {font-size:1.65vw;color:#c5d6df}
+</style>""", 1)
+    reception_dir = output / "boards" / "reception-1107"
+    reception_dir.mkdir(parents=True, exist_ok=True)
+    (reception_dir / "index.html").write_text(reception)
+
 
 if __name__ == "__main__":
     build()
