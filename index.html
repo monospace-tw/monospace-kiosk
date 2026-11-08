@@ -167,7 +167,7 @@ License: SIL-1.1
       document.body.dataset.course = String(course);
       label.innerHTML = course ? '<time datetime="2026-11-08">11.08</time><span>今日課程</span>' : '<span>WELCOME TO MONOSPACE</span>';
       title.textContent = course ? '雙手牌工作室' : 'monospace';
-      welcome.textContent = course ? (document.body.dataset.role === 'reception' ? '很高興今天與你相聚' : '歡迎來到 Monospace') : '你的工作、交流與創作基地';
+      welcome.textContent = course ? '歡迎來到 Monospace' : '你的工作、交流與創作基地';
       document.title = course ? '雙手牌工作室｜今日課程 · Monospace' : '歡迎來到 Monospace';
     }
     setTimeout(update, 1000 - Date.now() % 1000);
