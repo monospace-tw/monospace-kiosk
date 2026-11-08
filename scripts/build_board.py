@@ -45,10 +45,11 @@ def build():
         '<div class="stack"><span class="eyebrow">MEMBER ACCESS</span><strong>會員請刷卡</strong></div>',
         '<div class="stack reception-welcome"><span class="eyebrow">WELCOME TO MONOSPACE</span>'
         '<strong>歡迎來到 Monospace</strong><span class="reception-note">你的工作、交流與創作基地</span></div>',
-    ).replace('VISITORS / LINE', 'START HERE / LINE').replace('訪客預約・諮詢', '來訪報到・空間諮詢')
+    ).replace('VISITORS / LINE', 'START HERE / LINE').replace('訪客預約・諮詢', '空間諮詢')
+    reception = reception.replace('data-role="door"', 'data-role="reception"')
     reception = reception.replace(
-        '<strong>來訪報到・空間諮詢</strong>',
-        '<strong>來訪報到・空間諮詢</strong>'
+        '<strong>空間諮詢</strong>',
+        '<strong>空間諮詢</strong>'
         '<span class="reception-contact-note">掃碼加入 LINE，開始聯繫</span>',
     )
     if reception == page or 'reception-welcome' not in reception:
