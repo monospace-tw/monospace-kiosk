@@ -1,6 +1,7 @@
 """Build the self-contained Pages artifact from the public Luma attendance label."""
 from html.parser import HTMLParser
 from pathlib import Path
+import base64
 import re
 from urllib.request import Request, urlopen
 
@@ -39,7 +40,17 @@ def build():
         print(f"Public Luma attendance: {count} Going")
     output = Path("_site")
     output.mkdir(exist_ok=True)
-    (output / "index.html").write_text(page)
+    artwork_slot = '<div class="art" aria-hidden="true"></div>'
+    if page.count(artwork_slot) != 1:
+        raise ValueError("Expected one slot for the door welcome illustration")
+    artwork = base64.b64encode(Path("assets/shared-table.webp").read_bytes()).decode("ascii")
+    door = page.replace(
+        artwork_slot,
+        '<div class="art" aria-hidden="true">'
+        f'<img class="shared-table" src="data:image/webp;base64,{artwork}" alt="">'
+        '</div>',
+    )
+    (output / "index.html").write_text(door)
 
     reception = page.replace(
         '<div class="stack"><span class="eyebrow">MEMBER ACCESS</span><strong>會員請刷卡</strong></div>',

@@ -46,6 +46,10 @@ body[data-board="welcome"] .hero .copy { width:100%; min-width:0; align-self:cen
 h1 { margin:0; font-size:8.5vw; font-weight:700; line-height:1.2; letter-spacing:.02em; white-space:nowrap }
 .welcome-line { margin:3vh 0 0; font-size:2.2vw; line-height:1.5; letter-spacing:.08em }
 body[data-board="welcome"] .hero .art { display:none }
+body[data-role="door"][data-course="false"]:not([data-panel-layout]) .hero .art {
+  display:block; position:absolute; right:0; top:6%; width:44vw; height:88%;
+}
+.shared-table { display:block; width:100%; height:100%; object-fit:contain; object-position:right center }
 body[data-board="welcome"][data-panel-layout="mirror"] .hero .copy { text-align:right }
 body[data-board="welcome"][data-panel-layout="mirror"] .course-label { justify-content:flex-end }
 body[data-board="welcome"][data-panel-layout="mirror"] h1 { font-size:8.1vw }
