@@ -50,6 +50,11 @@ def build():
         f'<img class="shared-table" src="data:image/webp;base64,{artwork}" alt="">'
         '</div>',
     )
+    # Only the door artifact receives tablet protection. Reception stays byte-identical.
+    door = door.replace('</style>', Path('assets/door-protection.css').read_text() + '\n</style>', 1)
+    door = door.replace('</body>', '<script>\n' + Path('assets/door-protection.js').read_text() + '</script>\n</body>', 1)
+    if len(door.encode('utf-8')) > 2 * 1024 * 1024:
+        raise ValueError("Door artifact exceeds the offline receiver limit")
     (output / "index.html").write_text(door)
 
     reception = page.replace(
