@@ -1,4 +1,4 @@
-name: Publish kiosk with Luma attendance
+name: Publish kiosk
 on:
   push:
     branches: [main]
@@ -11,20 +11,54 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    outputs:
+      artifact-id: ${{ steps.upload.outputs.artifact_id }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/build_board.py
+      - id: upload
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
       pages: write
       id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      - run: python3 scripts/build_board.py
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
+      # Upload finalization can precede artifact discovery. Confirm this run's
+      # exact uploaded artifact is visible before handing it to deploy-pages.
+      - name: Wait for uploaded Pages artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+          ARTIFACT_ID: ${{ needs.build.outputs.artifact-id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$ARTIFACT_ID"
+          for attempt in {1..12}; do
+            if gh api "repos/$GH_REPO/actions/runs/$RUN_ID/artifacts" \
+              --jq '.artifacts[] | select(.name == "github-pages" and .expired == false) | .id' \
+              | grep -Fxq "$ARTIFACT_ID"; then
+              echo "Pages artifact $ARTIFACT_ID is available."
+              exit 0
+            fi
+            echo "Artifact discovery pending ($attempt/12)."
+            sleep 5
+          done
+          echo "::error::Uploaded Pages artifact was not discoverable within 60 seconds."
+          exit 1
       - id: deployment
         uses: actions/deploy-pages@v4
